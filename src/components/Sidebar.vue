@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { open } from '@tauri-apps/api/dialog';
+import { homeDir } from '@tauri-apps/api/path';
+import { metadata } from 'tauri-plugin-fs-extra-api';
 import { RouteNames } from '../routes';
 
 const searchKey = ref('');
@@ -19,6 +22,18 @@ const folderList = [
   { id: 'folder01', name: '文件夹1', path: '1', view: RouteNames.Folder },
   { id: 'folder02', name: '文件夹2', path: '2', view: RouteNames.Folder },
 ];
+
+const openFolder = async () => {
+  const selected = await open({
+    directory: true,
+    multiple: false,
+    defaultPath: await homeDir(),
+  });
+  
+  if (typeof selected === 'string') {
+    console.log(await metadata(selected));
+  }
+};
 
 const router = useRouter();
 
@@ -52,7 +67,7 @@ const setCurrentOpenFolder = (item: Item) => {
     <!-- 文件夹列表 -->
     <Section title="文件夹">
       <template #actions>
-        <i-mdi-plus class="cursor-pointer" />
+        <i-mdi-plus class="cursor-pointer" @click="openFolder" />
       </template>
       <FolderItem
         v-for="(folder, i) in folderList"
