@@ -1,10 +1,4 @@
-<script setup lang="ts">
-import * as fs from '@tauri-apps/api/fs';
-
-fs.readDir('/Users/xmy/Downloads', { recursive: true }).then((result) => {
-  console.log(result);
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="grid gap-4 grid-cols-4 px-5 py-4">

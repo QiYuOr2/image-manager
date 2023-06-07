@@ -3,25 +3,23 @@ import { open } from '@tauri-apps/api/dialog';
 import { homeDir } from '@tauri-apps/api/path';
 import { metadata } from 'tauri-plugin-fs-extra-api';
 import { RouteNames } from '../routes';
+import { useFolderList } from '../stores/useFolderList';
+import { Folder } from '../types';
+
+interface Item extends Folder {
+  view: string;
+}
+
+const { folders } = useFolderList();
 
 const searchKey = ref('');
 const search = () => {
   console.log(searchKey.value);
 };
 
-interface Item {
-  id: string;
-  path: string;
-  name: string;
-  view: string;
-}
+const overviewList = [{ name: '概览', path: 'overview', view: RouteNames.Overview }];
 
-const overviewList = [{ id: 'overview', name: '概览', path: 'overview', view: RouteNames.Overview }];
-
-const folderList = [
-  { id: 'folder01', name: '文件夹1', path: '1', view: RouteNames.Folder },
-  { id: 'folder02', name: '文件夹2', path: '2', view: RouteNames.Folder },
-];
+const folderList = computed(() => folders.map((item) => ({ ...item, view: RouteNames.Folder })));
 
 const openFolder = async () => {
   const selected = await open({
@@ -29,7 +27,7 @@ const openFolder = async () => {
     multiple: false,
     defaultPath: await homeDir(),
   });
-  
+
   if (typeof selected === 'string') {
     console.log(await metadata(selected));
   }
@@ -39,8 +37,8 @@ const router = useRouter();
 
 const currentOpenFolder = ref('overview');
 const setCurrentOpenFolder = (item: Item) => {
-  currentOpenFolder.value = item.id;
-  router.push({ name: item.view });
+  currentOpenFolder.value = item.path;
+  router.push({ name: item.view, query: { path: item.path } });
 };
 </script>
 
@@ -53,7 +51,7 @@ const setCurrentOpenFolder = (item: Item) => {
       <FolderItem
         v-for="(item, i) in overviewList"
         :key="i"
-        :active="currentOpenFolder === item.id"
+        :active="currentOpenFolder === item.path"
         :title="item.name"
         :path="item.path"
         @click="setCurrentOpenFolder(item)"
@@ -72,7 +70,7 @@ const setCurrentOpenFolder = (item: Item) => {
       <FolderItem
         v-for="(folder, i) in folderList"
         :key="i"
-        :active="currentOpenFolder === folder.id"
+        :active="currentOpenFolder === folder.path"
         :title="folder.name"
         :path="folder.path"
         @click="setCurrentOpenFolder(folder)"
