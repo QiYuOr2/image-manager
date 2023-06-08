@@ -3,7 +3,7 @@ name = "image-manager"
 version = "0.0.0"
 description = "A Tauri App"
 authors = ["qiyuor2"]
-license = ""
+license = "MIT"
 repository = ""
 edition = "2021"
 
