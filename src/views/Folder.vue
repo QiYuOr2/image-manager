@@ -23,14 +23,12 @@ watch(
       readImages(value);
     }
   },
-  {
-    immediate: true,
-  }
+  { immediate: true }
 );
 </script>
 
 <template>
-  <div class="px-5 py-4 flex flex-wrap">
-    <img class="w-24 h-24 object-contain" v-for="img in images" :src="convertFileSrc(img.path)" :key="img.path" />
+  <div class="px-2 py-2 grid gap-1 grid-cols-5">
+    <Image class="aspect-square bg-slate-950" v-for="img in images" :src="convertFileSrc(img.path)" :key="img.path" fit="object-cover" />
   </div>
 </template>

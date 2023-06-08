@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     DataItem: typeof import('./components/DataItem.vue')['default']
     FolderItem: typeof import('./components/FolderItem.vue')['default']
     Greet: typeof import('./components/Greet.vue')['default']
+    Image: typeof import('./components/basic/Image.vue')['default']
     IMdiFolder: typeof import('~icons/mdi/folder')['default']
     IMdiFolderOpenOutline: typeof import('~icons/mdi/folder-open-outline')['default']
     IMdiFolderOutline: typeof import('~icons/mdi/folder-outline')['default']
