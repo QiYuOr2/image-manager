@@ -42,7 +42,7 @@ function onImageLoaded() {
 </script>
 
 <template>
-  <div ref="imageContainer" class="relative cursor-pointer transition-all hover:scale-125 hover:z-50">
+  <div ref="imageContainer" class="relative cursor-pointer transition-all hover:scale-110 hover:z-50">
     <img v-if="selfSrc" :class="['w-full h-full bg-gray-950', fit]" :src="selfSrc" :alt="alt" @load="onImageLoaded" />
     <div class="bg-gray-100 absolute inset-0 z-10" v-if="!isLoaded"></div>
   </div>

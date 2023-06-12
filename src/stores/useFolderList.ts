@@ -10,5 +10,5 @@ export const useFolderList = defineStore('folderList', () => {
     },
   ]);
 
-  return reactive({ folders });
+  return { folders };
 });
